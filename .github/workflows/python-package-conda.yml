@@ -1,0 +1,40 @@
+def isvalid(c):
+    if c.isalnum():
+        return True
+    if c == '-' or c == '_'or c == '.':
+        return True
+    return False
+
+def solution(new_id):
+    answer = ''
+    
+    lastDot = False
+    for c in new_id:
+        if isvalid(c) == False:
+            continue
+            
+        if c == '.':
+            if len(answer) == 0 or lastDot:
+                continue 
+            lastDot = True
+        else:
+            lastDot = False
+            
+        c = c.lower()
+        answer += c
+    
+    if len(answer) >= 16:
+        answer = answer[:15]
+    
+    if answer.endswith('.'):
+        answer = answer[:-1]
+        
+    if len(answer) == 0:
+        answer += 'a'
+    
+    if len(answer) <= 2:
+        c = answer[-1:]
+        while len(answer) < 3:
+            answer += c
+    
+    return answer
