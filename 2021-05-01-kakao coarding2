@@ -1,0 +1,23 @@
+from itertools import combinations
+
+def solution(orders, course):
+    answer = []
+    foodcourse = [{} for _ in range(11)]
+    maxcont = [0 for _ in range(11)]
+    
+    for str in orders:
+        for num in range(2, len(str) + 1):
+            for i in combinations(sorted(str), num):
+                key = ''.join(i)
+                if key in foodcourse[num]:
+                    foodcourse[num][key] += 1
+                    maxcont[num] = max(maxcont[num], foodcourse[num][key])
+                else:
+                    foodcourse[num][key] = 1
+    
+    for num in course:
+        for key, value in foodcourse[num].items():
+            if value >= 2 and value == maxcont[num]:
+                answer.append(key)
+    
+    return sorted(answer)
